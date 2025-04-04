@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{template :: layout(~{:: main})}">
+
+
+    <body>
+    <main>
+        <div class="container mt-5">
+            <div class="card shadow p-4">
+                <h1 class="text-center mb-4">Minha Página de Cadastro</h1>
+                <h2 class="text-center text-muted">Preencha o Formulário</h2>
+
+                <form method="post" th:action="@{/produto}" th:object="${produto}">
+                    <input type="hidden" th:field="*{id}"/>
+
+                    <div class="mb-3">
+                        <label class="form-label">Nome:</label>
+                        <input type="text" class="form-control" th:field="*{nome}" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Descrição:</label>
+                        <input type="text" class="form-control" th:field="*{descricao}" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Valor:</label>
+                        <input type="number" class="form-control" th:field="*{preco}" step="0.01" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Quantidade:</label>
+                        <input type="number" class="form-control" th:field="*{quantidade}" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Imagem (URL):</label>
+                        <input type="text" class="form-control" th:field="*{imagem}">
+                    </div>
+
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary">Salvar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </main>
+    </body>
+</html>

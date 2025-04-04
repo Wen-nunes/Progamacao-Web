@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{template :: layout(~{:: main})}">
+
+    <body>
+    <main>
+        <div class="container mt-5">
+            <div class="card shadow p-4">
+                <h1 class="text-center mb-4">Lista de Produtos</h1>
+                <div class="text-end mb-3">
+                    <a th:href="@{/produto/novo}" class="btn btn-success">Criar Produto</a>
+                </div>
+                <table class="table table-striped table-bordered">
+                    <thead class="table-dark">
+                    <tr>
+                        <th>Nome</th>
+                        <th>Descrição</th>
+                        <th>Preço</th>
+                        <th>Quantidade</th>
+                        <th>Imagem</th>
+                        <th>Ações</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="p : ${produtos}">
+                        <td th:text="${p.nome}"></td>
+                        <td th:text="${p.descricao}"></td>
+                        <td th:text="${p.preco}"></td>
+                        <td th:text="${p.quantidade}"></td>
+                        <td><img th:src="${p.imagem}" class="img-thumbnail" width="100"/></td>
+                        <td>
+                            <a th:href="@{/produto/editar/{id}(id=${p.id})}" class="btn btn-warning btn-sm">Editar</a>
+                            <a th:href="@{/produto/deletar/{id}(id=${p.id})}" class="btn btn-danger btn-sm">Deletar</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+    </body>
+</html>
