@@ -15,25 +15,21 @@ public class Cliente {
     @Column(nullable = false)
     private String nome;
     private String endereco;
-    private float credito;
-    private float debito;
 
     @OneToMany(mappedBy = "cliente")
     private List<Venda> vendas;
 
-    public Cliente(int id, String nome, String endereco, float credito, float debito) {
-        this.id = id;
+    public Cliente(String nome, int id, String endereco, List<Venda> vendas) {
         this.nome = nome;
+        this.id = id;
         this.endereco = endereco;
-        this.credito = credito;
-        this.debito = debito;
+        this.vendas = vendas;
     }
 
-    public Cliente(String nome, String endereco, float credito, float debito) {
+    public Cliente(String nome, String endereco, List<Venda> vendas) {
         this.nome = nome;
         this.endereco = endereco;
-        this.credito = credito;
-        this.debito = debito;
+        this.vendas = vendas;
     }
 
     public Cliente() {
@@ -47,20 +43,12 @@ public class Cliente {
         this.id = id;
     }
 
-    public float getDebito() {
-        return debito;
+    public String getNome() {
+        return nome;
     }
 
-    public void setDebito(float debito) {
-        this.debito = debito;
-    }
-
-    public float getCredito() {
-        return credito;
-    }
-
-    public void setCredito(float credito) {
-        this.credito = credito;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     public String getEndereco() {
@@ -71,24 +59,24 @@ public class Cliente {
         this.endereco = endereco;
     }
 
-    public String getNome() {
-        return nome;
+    public List<Venda> getVendas() {
+        return vendas;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setVendas(List<Venda> vendas) {
+        this.vendas = vendas;
     }
 
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Cliente cliente = (Cliente) o;
-        return id == cliente.id && Float.compare(credito, cliente.credito) == 0 && Float.compare(debito, cliente.debito) == 0 && Objects.equals(nome, cliente.nome) && Objects.equals(endereco, cliente.endereco);
+        return id == cliente.id && Objects.equals(nome, cliente.nome) && Objects.equals(endereco, cliente.endereco) && Objects.equals(vendas, cliente.vendas);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, nome, endereco, credito, debito);
+        return Objects.hash(id, nome, endereco, vendas);
     }
 
     @Override
@@ -97,8 +85,7 @@ public class Cliente {
                 "id=" + id +
                 ", nome='" + nome + '\'' +
                 ", endereco='" + endereco + '\'' +
-                ", credito=" + credito +
-                ", debito=" + debito +
+                ", vendas=" + vendas +
                 '}';
     }
 }

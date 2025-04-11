@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Área do Fornecedor</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .nav-tabs {
+            margin-bottom: 20px;
+        }
+        .form-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .table-container {
+            margin-top: 20px;
+        }
+        .back-button {
+            margin-bottom: 20px;
+        }
+        .total-lucro {
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/" class="btn btn-secondary back-button">Voltar</a>
+        <h1 class="text-center mb-4">Área do Fornecedor</h1>
+        
+        <ul class="nav nav-tabs" id="fornecedorTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="produtos-tab" data-bs-toggle="tab" data-bs-target="#produtos" type="button" role="tab">Cadastro de Produtos</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="relatorio-tab" data-bs-toggle="tab" data-bs-target="#relatorio" type="button" role="tab">Relatório de Lucros</button>
+            </li>
+        </ul>
+
+        <div class="tab-content">
+            <!-- Aba de Produtos -->
+            <div class="tab-pane fade show active form-container" id="produtos" role="tabpanel">
+                <h2>Cadastro de Produtos</h2>
+                <form id="produtoForm">
+                    <div class="mb-3">
+                        <label for="nomeProduto" class="form-label">Nome do Produto</label>
+                        <input type="text" class="form-control" id="nomeProduto" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="descricao" class="form-label">Descrição</label>
+                        <textarea class="form-control" id="descricao" rows="3" required></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="precoCompra" class="form-label">Preço de Compra</label>
+                        <input type="number" step="0.01" class="form-control" id="precoCompra" min="0" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="precoVenda" class="form-label">Preço de Venda</label>
+                        <input type="number" step="0.01" class="form-control" id="precoVenda" min="0" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="quantidade" class="form-label">Quantidade em Estoque</label>
+                        <input type="number" class="form-control" id="quantidade" min="0" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Cadastrar Produto</button>
+                </form>
+
+                <div class="table-container">
+                    <h3>Produtos Cadastrados</h3>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nome</th>
+                                <th>Preço de Venda</th>
+                                <th>Estoque</th>
+                            </tr>
+                        </thead>
+                        <tbody id="produtosTableBody">
+                            <tr th:each="produto : ${produtos}">
+                                <td th:text="${produto.id}"></td>
+                                <td th:text="${produto.nome}"></td>
+                                <td th:text="${#numbers.formatDecimal(produto.preco_venda, 0, 'POINT', 2, 'COMMA')}"></td>
+                                <td th:text="${produto.quantidade}"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Aba de Relatório -->
+            <div class="tab-pane fade form-container" id="relatorio" role="tabpanel">
+                <h2>Relatório de Lucros</h2>
+                <div class="mb-3">
+                    <button class="btn btn-primary" onclick="gerarRelatorio()">Gerar Relatório</button>
+                </div>
+                <div id="relatorioResultado">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Produto</th>
+                                <th>Quantidade Vendida</th>
+                                <th>Lucro Total</th>
+                            </tr>
+                        </thead>
+                        <tbody id="relatorioTableBody">
+                        </tbody>
+                    </table>
+                    <div id="totalLucro" class="total-lucro" style="display: none;">
+                        Lucro Total: R$ <span id="valorTotalLucro">0,00</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Formulário de produto
+        document.getElementById('produtoForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const produto = {
+                nome: document.getElementById('nomeProduto').value,
+                descricao: document.getElementById('descricao').value,
+                preco_de_compra: parseFloat(document.getElementById('precoCompra').value),
+                preco_venda: parseFloat(document.getElementById('precoVenda').value),
+                quantidade: parseInt(document.getElementById('quantidade').value)
+            };
+            
+            fetch('/mercadorias', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(produto)
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert('Produto cadastrado com sucesso!');
+                this.reset();
+                location.reload(); // Recarrega a página para atualizar a tabela
+            })
+            .catch(error => {
+                alert('Erro ao cadastrar produto');
+                console.error(error);
+            });
+        });
+
+        function gerarRelatorio() {
+            fetch('/vendas')
+                .then(response => response.json())
+                .then(vendas => {
+                    const tbody = document.getElementById('relatorioTableBody');
+                    tbody.innerHTML = '';
+                    
+                    // Agrupar vendas por produto
+                    const vendasPorProduto = {};
+                    let lucroTotal = 0;
+                    
+                    vendas.forEach(venda => {
+                        const produtoId = venda.mercadoria.id;
+                        if (!vendasPorProduto[produtoId]) {
+                            vendasPorProduto[produtoId] = {
+                                nome: venda.mercadoria.nome,
+                                quantidade: 0,
+                                lucroTotal: 0
+                            };
+                        }
+                        vendasPorProduto[produtoId].quantidade += venda.quantidade;
+                        const lucro = (venda.mercadoria.preco_venda - venda.mercadoria.preco_de_compra) * venda.quantidade;
+                        vendasPorProduto[produtoId].lucroTotal += lucro;
+                        lucroTotal += lucro;
+                    });
+
+                    // Exibir resultados
+                    Object.values(vendasPorProduto).forEach(produto => {
+                        const tr = document.createElement('tr');
+                        tr.innerHTML = `
+                            <td>${produto.nome}</td>
+                            <td>${produto.quantidade}</td>
+                            <td>R$ ${produto.lucroTotal.toFixed(2)}</td>
+                        `;
+                        tbody.appendChild(tr);
+                    });
+
+                    // Exibir total
+                    document.getElementById('totalLucro').style.display = 'block';
+                    document.getElementById('valorTotalLucro').textContent = lucroTotal.toFixed(2);
+                })
+                .catch(error => console.error(error));
+        }
+    </script>
+</body>
+</html> 
