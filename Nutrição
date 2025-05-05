@@ -1,0 +1,39 @@
+------------------ Api da Nutrição ----------------------------
+
+Sempre gramas e ml
+
+Banco de dados: 
+Tabelas: 
+  -Receitas: 
+      -Id(numero)
+      -Nome
+      -Categoria (prato principal (proteina), complemento ou guarnição, salada, sobremesa e bebida) 
+      -Lista de igrediantes
+      - custo total
+      -custo percapito -> custo da porção 
+      - rendimento -> pso total da refeição completa 
+      - numero de porções -> rendimento / peso da porção ( Arredondamento sempra para baixo) 
+
+  -Mode de preparo
+      -Custo total
+      -Custo percapito
+      -Equipamentos
+      - Medida caseira
+      -custo quantidade utilizada -> valor da quantidade utilizada, efetuado or uma regra de 3 
+      -custo percapita-> custo total / numero de porções 
+      -FCC ou fator de cocção (relação com o peso) -> peso cozido / peso cru (pl) --> fator de rendimento (hidratou ou desidratou) 
+      no fcc pode vriar m questão da água, o nutri pode querer o colculo com o peso da agua, sem o peso da agua ou 50/50 
+
+  -Igredientes
+      -Nome
+      -Tipo
+      -Custo
+      -PL ou peso liquido (matrial sem casca, por exemplo) 
+      -PB ou peso bruto(material bruto) 
+      - FC ou fator de correção (diferença de Pl/PB) (varia o que pode ser, ou casa, ou semente...)
+      -custo forma de compra -> valor do kg
+
+-Perfil Nutricional
+    -proteina x4 
+    -carboidratos x4 
+    -lipidio x9
