@@ -1,13 +1,13 @@
 package com.example.avaliacao.service;
 
-import com.example.avaliacao.model.Cliente;
+import com.example.avaliacao.dto.ProdutoDTO;
 import com.example.avaliacao.model.Produto;
 import com.example.avaliacao.repository.ProdutoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ProdutoService {
@@ -15,37 +15,56 @@ public class ProdutoService {
     @Autowired
     private ProdutoRepository produtoRepository;
 
-    public Produto save(Produto produto) {
-        return produtoRepository.save(produto);
+    public ProdutoDTO criarProduto(ProdutoDTO produtoDTO) {
+        Produto produto = new Produto();
+        produto.setNome(produtoDTO.getNome());
+        produto.setDescricao(produtoDTO.getDescricao());
+        produto.setPreco(produtoDTO.getPreco());
+        produto.setQuantidade(produtoDTO.getQuantidade());
+        
+        Produto produtoSalvo = produtoRepository.save(produto);
+        return converterParaDTO(produtoSalvo);
     }
 
-    public List<Produto> findAll() {
-        return produtoRepository.findAll();
+    public ProdutoDTO buscarProduto(Integer id) {
+        Produto produto = produtoRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Produto não encontrado"));
+        return converterParaDTO(produto);
     }
 
-    public Optional<Produto> findByCodigo(Long codigo) {
-        return produtoRepository.findById(codigo);
+    public List<ProdutoDTO> listarProdutos() {
+        return produtoRepository.findAll().stream()
+                .map(this::converterParaDTO)
+                .collect(Collectors.toList());
     }
 
-    public boolean existsByCodigo(Long codigo) {
-        return produtoRepository.existsById(codigo);
+    public ProdutoDTO atualizarProduto(Integer id, ProdutoDTO produtoDTO) {
+        Produto produto = produtoRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Produto não encontrado"));
+        
+        produto.setNome(produtoDTO.getNome());
+        produto.setDescricao(produtoDTO.getDescricao());
+        produto.setPreco(produtoDTO.getPreco());
+        produto.setQuantidade(produtoDTO.getQuantidade());
+        
+        Produto produtoAtualizado = produtoRepository.save(produto);
+        return converterParaDTO(produtoAtualizado);
     }
 
-    public void deleteByCodigo(Long codigo) {
-        produtoRepository.deleteById(codigo);
+    public void deletarProduto(Integer id) {
+        if (!produtoRepository.existsById(id)) {
+            throw new RuntimeException("Produto não encontrado");
+        }
+        produtoRepository.deleteById(id);
     }
 
-    public Produto updateProduto(Long codigo, Produto produtoAtualizado) {
-        Produto produtoExistente = produtoRepository.findByCodigo(codigo)
-                .orElseThrow(() -> new IllegalArgumentException("Produto com código " + codigo + " não encontrado"));
-
-        produtoExistente.setNome(produtoAtualizado.getNome());
-        produtoExistente.setDescricao(produtoAtualizado.getDescricao());
-        produtoExistente.setPreco(produtoAtualizado.getPreco());
-        produtoExistente.setQuantidade(produtoAtualizado.getQuantidade());
-
-        return produtoRepository.save(produtoExistente);
+    private ProdutoDTO converterParaDTO(Produto produto) {
+        ProdutoDTO dto = new ProdutoDTO();
+        dto.setCodigo(produto.getCodigo());
+        dto.setNome(produto.getNome());
+        dto.setDescricao(produto.getDescricao());
+        dto.setPreco(produto.getPreco());
+        dto.setQuantidade(produto.getQuantidade());
+        return dto;
     }
-
-
 }

@@ -1,12 +1,13 @@
 package com.example.avaliacao.service;
 
+import com.example.avaliacao.dto.ClienteDTO;
 import com.example.avaliacao.model.Cliente;
 import com.example.avaliacao.repository.ClienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ClienteService {
@@ -14,44 +15,53 @@ public class ClienteService {
     @Autowired
     private ClienteRepository clienteRepository;
 
-    public Cliente save(Cliente cliente){
-        if(ClienteRepository.existsByEmail(cliente.getEmail())){
-            throw new IllegalArgumentException("Cliente com esse e-mail já existe.");
+    public ClienteDTO criarCliente(ClienteDTO clienteDTO) {
+        Cliente cliente = new Cliente();
+        cliente.setNome(clienteDTO.getNome());
+        cliente.setCpf(clienteDTO.getCpf());
+        cliente.setEmail(clienteDTO.getEmail());
+        
+        Cliente clienteSalvo = clienteRepository.save(cliente);
+        return converterParaDTO(clienteSalvo);
+    }
+
+    public ClienteDTO buscarCliente(Long id) {
+        Cliente cliente = clienteRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Cliente não encontrado"));
+        return converterParaDTO(cliente);
+    }
+
+    public List<ClienteDTO> listarClientes() {
+        return clienteRepository.findAll().stream()
+                .map(this::converterParaDTO)
+                .collect(Collectors.toList());
+    }
+
+    public ClienteDTO atualizarCliente(Long id, ClienteDTO clienteDTO) {
+        Cliente cliente = clienteRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Cliente não encontrado"));
+        
+        cliente.setNome(clienteDTO.getNome());
+        cliente.setCpf(clienteDTO.getCpf());
+        cliente.setEmail(clienteDTO.getEmail());
+        
+        Cliente clienteAtualizado = clienteRepository.save(cliente);
+        return converterParaDTO(clienteAtualizado);
+    }
+
+    public void deletarCliente(Long id) {
+        if (!clienteRepository.existsById(id)) {
+            throw new RuntimeException("Cliente não encontrado");
         }
-
-        return clienteRepository.save(cliente);
-    }
-
-
-    public List<Cliente> findAll() {
-        return clienteRepository.findAll();
-    }
-
-
-    public Optional<Cliente> findByCpf(String cpf) {
-        return clienteRepository.findByCpf(cpf);
-    }
-
-    public Optional<Cliente> findById(Long id) {
-        return clienteRepository.findById(id);
-    }
-
-    public boolean existsById(Long id) {
-        return clienteRepository.existsById(id);
-    }
-
-    public void deleteById(Long id) {
         clienteRepository.deleteById(id);
     }
 
-    public Cliente updateCliente(Long id, Cliente clienteAtualizado) {
-        Cliente clienteExistente = clienteRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Cliente com ID " + id + " não encontrado"));
-
-        clienteExistente.setNome(clienteAtualizado.getNome());
-        clienteExistente.setCpf(clienteAtualizado.getCpf());
-
-        return clienteRepository.save(clienteExistente);
+    private ClienteDTO converterParaDTO(Cliente cliente) {
+        ClienteDTO dto = new ClienteDTO();
+        dto.setId(cliente.getId());
+        dto.setNome(cliente.getNome());
+        dto.setCpf(cliente.getCpf());
+        dto.setEmail(cliente.getEmail());
+        return dto;
     }
-
 }

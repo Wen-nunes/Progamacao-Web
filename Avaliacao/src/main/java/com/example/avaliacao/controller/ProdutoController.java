@@ -1,58 +1,63 @@
 package com.example.avaliacao.controller;
 
-import com.example.avaliacao.model.Cliente;
-import com.example.avaliacao.model.Produto;
+import com.example.avaliacao.dto.ProdutoDTO;
 import com.example.avaliacao.service.ProdutoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
-@RequestMapping("/produto")
+@RequestMapping("/api/produtos")
 public class ProdutoController {
-    private ProdutoService produtoService;
 
     @Autowired
-    public ProdutoController(ProdutoService produtoService) {
-        this.produtoService = produtoService;
-    }
-
-    @GetMapping
-    public List<Produto> listarProduto() {
-        return produtoService.findAll();
-    }
-
-    @GetMapping("/{codigo}")
-    public ResponseEntity<Produto> buscarProduto(@PathVariable Long codigo) {
-        Optional<Produto> produto = produtoService.findByCodigo(codigo);
-        return produto.map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
-    }
+    private ProdutoService produtoService;
 
     @PostMapping
-    public Produto cadastrarProduto(@RequestBody Produto produto) {
-        return produtoService.save(produto);
+    public ResponseEntity<ProdutoDTO> criarProduto(@RequestBody ProdutoDTO produtoDTO) {
+        try {
+            ProdutoDTO produtoCriado = produtoService.criarProduto(produtoDTO);
+            return ResponseEntity.ok(produtoCriado);
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().build();
+        }
     }
 
-    @PutMapping("/{codigo}")
-    public ResponseEntity<Produto> atualizarProduto(@PathVariable Long codigo, @RequestBody Produto produtoAtualizado) {
+    @GetMapping("/{id}")
+    public ResponseEntity<ProdutoDTO> buscarProduto(@PathVariable Integer id) {
         try {
-            Produto produto = produtoService.updateProduto(codigo, produtoAtualizado);
+            ProdutoDTO produto = produtoService.buscarProduto(id);
             return ResponseEntity.ok(produto);
-        } catch (IllegalArgumentException e) {
+        } catch (RuntimeException e) {
             return ResponseEntity.notFound().build();
         }
     }
 
-    @DeleteMapping("/{codigo}")
-    public ResponseEntity<Void> deletarCliente(@PathVariable Long codigo) {
-        if (produtoService.existsByCodigo(codigo)) {
-            produtoService.deleteByCodigo(codigo);
-            return ResponseEntity.noContent().build();
+    @GetMapping
+    public ResponseEntity<List<ProdutoDTO>> listarProdutos() {
+        List<ProdutoDTO> produtos = produtoService.listarProdutos();
+        return ResponseEntity.ok(produtos);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<ProdutoDTO> atualizarProduto(@PathVariable Integer id, @RequestBody ProdutoDTO produtoDTO) {
+        try {
+            ProdutoDTO produtoAtualizado = produtoService.atualizarProduto(id, produtoDTO);
+            return ResponseEntity.ok(produtoAtualizado);
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.notFound().build();
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletarProduto(@PathVariable Integer id) {
+        try {
+            produtoService.deletarProduto(id);
+            return ResponseEntity.noContent().build();
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 }

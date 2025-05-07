@@ -1,62 +1,63 @@
 package com.example.avaliacao.controller;
 
-import com.example.avaliacao.model.Cliente;
+import com.example.avaliacao.dto.ClienteDTO;
 import com.example.avaliacao.service.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
-@RequestMapping("/cliente")
+@RequestMapping("/api/clientes")
 public class ClienteController {
-    private ClienteService clienteService;
 
     @Autowired
-    public ClienteController(ClienteService clienteService) {
-        this.clienteService = clienteService;
-    }
-    @GetMapping
-    public List<Cliente> listarClientes() {
-        return clienteService.findAll();
+    private ClienteService clienteService;
+
+    @PostMapping
+    public ResponseEntity<ClienteDTO> criarCliente(@RequestBody ClienteDTO clienteDTO) {
+        try {
+            ClienteDTO clienteCriado = clienteService.criarCliente(clienteDTO);
+            return ResponseEntity.ok(clienteCriado);
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().build();
+        }
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Cliente> buscarCliente(@PathVariable Long id) {
-        Optional<Cliente> cliente = clienteService.findById(id);
-        return cliente.map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
-    }
-
-    @GetMapping("/cpf/{cpf}")
-    public ResponseEntity<Cliente> buscarClientePorCpf(@PathVariable String cpf) {
-        Optional<Cliente> cliente = clienteService.findByCpf(cpf);
-        return cliente.map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
-    }
-
-    @PostMapping
-    public Cliente cadastrarCliente(@RequestBody Cliente cliente) {
-        return clienteService.save(cliente);
-    }
-
-    @PutMapping("/{id}")
-    public ResponseEntity<Cliente> atualizarCliente(@PathVariable Long id, @RequestBody Cliente clienteAtualizado) {
+    public ResponseEntity<ClienteDTO> buscarCliente(@PathVariable Long id) {
         try {
-            Cliente cliente = clienteService.updateCliente(id, clienteAtualizado);
+            ClienteDTO cliente = clienteService.buscarCliente(id);
             return ResponseEntity.ok(cliente);
-        } catch (IllegalArgumentException e) {
+        } catch (RuntimeException e) {
             return ResponseEntity.notFound().build();
         }
     }
+
+    @GetMapping
+    public ResponseEntity<List<ClienteDTO>> listarClientes() {
+        List<ClienteDTO> clientes = clienteService.listarClientes();
+        return ResponseEntity.ok(clientes);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<ClienteDTO> atualizarCliente(@PathVariable Long id, @RequestBody ClienteDTO clienteDTO) {
+        try {
+            ClienteDTO clienteAtualizado = clienteService.atualizarCliente(id, clienteDTO);
+            return ResponseEntity.ok(clienteAtualizado);
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletarCliente(@PathVariable Long id) {
-        if (clienteService.existsById(id)) {
-            clienteService.deleteById(id);
+        try {
+            clienteService.deletarCliente(id);
             return ResponseEntity.noContent().build();
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.notFound().build();
     }
 }

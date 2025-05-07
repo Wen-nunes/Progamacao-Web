@@ -6,6 +6,4 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface VendaRepository extends JpaRepository<Vendas, Integer> {
-
-    Vendas save(Vendas venda);
-}
+} 
