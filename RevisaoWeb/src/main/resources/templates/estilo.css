@@ -1,0 +1,46 @@
+body{
+    background: #fcebb6;
+}
+
+h1{
+    color: black;
+    font-family: "Times New Roman";
+}
+
+p{
+    background: aliceblue;
+    color: black;
+    font-family: "Times New Roman";
+    padding: 30px;
+    border: 2px solid powderblue;
+    margin: 50px;
+}
+
+.conteudo{
+    display: flex;
+}
+
+.botao{
+   font-family: "Times New Roman";
+    color: black;
+    font-size: 18px;
+    background: bisque;
+    border-radius: 15px;
+    margin: 25px;
+    padding: 5px;
+}
+
+/* Estilizando a tabela */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+th, td {
+    padding: 12px 18px;
+    text-align: left;
+    border: 1px solid #ddd;
+    background: aliceblue;
+}
+
