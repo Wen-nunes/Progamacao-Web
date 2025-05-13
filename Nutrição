@@ -37,3 +37,37 @@ Tabelas:
     -proteina x4 
     -carboidratos x4 
     -lipidio x9
+
+
+Pos primeira apresentação: 
+
+por username no login
+opção entrar como nutri e usuário comum
+
+vct em kcal
+kcal de cada macronutriente
+% de proteína carbo, lip, sódio
+APARECER a % e Kcal
+
+proteínas de cada ingrediente
+total
+porcentagem
+
+diminuir os textField da parte de baixo de modo de preparo
+
+Izinho em total de kcal para informar como fazer a formula (4kcal pro, 4kcal carbo, 9kcal lip)
+
+
+Categoria: trocar text field por combo box
+
+Possibilidade de por uma pagina de busca por lista, baseada em quais são mais ricas ou mais crentes em cada macro nutriente, e buscar por categoria
+
+No banco, cada cadastro vai ter um banco para produtos novos, assim evit a poluição do banco geral 
+Área, nutri e cozinha 
+
+funcionalidade de impressão 
+
+Pagina e acesso a produtos cadastrados, pra editar ou excluir 
+
+
+
