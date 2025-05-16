@@ -6,7 +6,8 @@
     <link rel="stylesheet" href="estilo.css">
 </head>
 <body >
-<h1 style="font-size: 50px">Tiririca</h1>
+<h1 style="font-size: 50px" id="topo">Tiririca</h1>
+
 
 <div class="conteudo">
 <img src="download.jpg" alt="axooooooo" title="Imgem de titirica quando era bonito">
@@ -19,22 +20,29 @@
 
 <h3 style="font-size: 30px; color:#5e412f; background: #fcebb6; text-align: center" >Profissão: Politico</h3>
 
-<p>Sou um cara engraçado, comecei minha carreira fazendo standup no programa do Tom cavalcante<br>
+<p>Sou um cara engraçado, comecei minha carreira fazendo stand up no programa do Tom cavalcante<br>
 logo depois virei politico pois nosso pais é uma piada<br>
 </p>
-<h3>HABILIDADES</h3>
+<h2 style="text-align: center">HABILIDADES</h2>
+<div class="conteudo">
 <ul>
     <li>Engraçado</li>
     <li><mark>Honesto</mark></li>
     <li>Engraçado</li>
     <li><mark>Honesto</mark></li>
 </ul>
+</div>
+
+<div id="redes sociais">
 <p style="text-align: center">
-<a target="_blank" href="https://pt.wikipedia.org/wiki/Tiririca" style="font-family: Corbel">SOBRE MIM<br></a>
+<a target="_blank" href="https://pt.wikipedia.org/wiki/Tiririca" style="font-family: 'Times New Roman'">SOBRE MIM<br></a>
     <a href="mailto:wendel.nunes@ufn.edu.br">Contate ao seu empresario</a>
 </p>
+</div>
+
 <button class="botao"  onclick="window.open('https://www.camara.leg.br/deputados/160976', '_blank')">Portal da camara</button>
-<table style="width:100%">
+<div class="tabela">
+<table>
     <tr>
         <th>Habilidades</th>
         <th>Nivel</th>
@@ -56,7 +64,75 @@ logo depois virei politico pois nosso pais é uma piada<br>
         <td>infinito</td>
     </tr>
 </table>
+</div>
 
+<div class="tabela">
+    <table>
+        <tr>
+            <th>Piadas</th>
+            <th>Vezes Usadas</th>
+            <th>Nivel de Aceitação</th>
+        </tr>
+        <tr>
+            <td>Piada do Pavê</td>
+            <td>+1000</td>
+            <td>15%</td>
+        </tr>
+        <tr>
+            <td>Piada do Mario</td>
+            <td>300</td>
+            <td>20%</td>
+        </tr>
+        <tr>
+            <td>Piadas sobre Loiras</td>
+            <td>500</td>
+            <td>80%</td>
+        </tr>
+    </table>
+</div>
+<h2 style="text-align: center">Faça parte do Nosso Grupo de Apostas</h2>
+<div class="Formulario">
+
+    <form method="post">
+        <div>
+            <label for="nome">Nome:</label>
+            <input type="text" name="nome" id="nome" placeholder="Digite seu nome" required>
+        </div><br>
+        <div>
+            <label for="email">Email:</label>
+            <input type="text" name="email" placeholder="Seuemail@hotmail.com" id="email" required>
+        </div><br>
+        <div>
+            <label for="tipo">Tipo de Aposta:</label>
+            <select id="tipo" name="aposta" required>
+                <option value="Cassino">Cassino</option>
+                <option value="Aposta Esportiva">Aposta Espostiva</option>
+                <option value="Tigrinho">Tigrinho</option>
+                <option value="Jogo do Bicho">Jogo do Bicho</option>
+                <option value="Tri Legal">Tri Legal</option>
+            </select><br><br>
+        </div>
+        <div>
+            <h4>Gênero:</h4>
+            <input type="radio" id="masc" name="genero" value="masculino">
+            <label for="masc">Masculino</label>
+            <input type="radio" id="fem" name="genero" value="feminino">
+            <label for="fem">Feminino</label><br><br>
+        </div>
+        <div>
+            <label for="mensagem">Mensagem:</label><br>
+            <textarea id="mensagem" name="mensagem" rows="4" cols="40"></textarea><br><br>
+        </div>
+
+
+    </form>
+</div>
+
+
+
+<a href="#topo">
+<button class="botao" >Voltar ao topo</button>
+</a>
 
 
 </body>
