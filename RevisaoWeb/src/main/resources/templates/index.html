@@ -2,14 +2,18 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Titulo</title>
-    <link rel="stylesheet" href="estilo.css">
+    <title>Curriculo</title>
+    <link id="theme" rel="stylesheet" href="estilo.css">
 </head>
+<header>
+    <div class="cabeca">
+        <h1 id="topo">Tiririca</h1>
+    </div>
+</header>
 <body >
-<h1 style="font-size: 50px" id="topo">Tiririca</h1>
 
+<div class="fotos">
 
-<div class="conteudo">
 <img src="download.jpg" alt="axooooooo" title="Imgem de titirica quando era bonito">
 <!--URL relativa -->
 
@@ -18,12 +22,13 @@
 <!--URL absoluta -->
 </div>
 
-<h3 style="font-size: 30px; color:#5e412f; background: #fcebb6; text-align: center" >Profissão: Politico</h3>
+<h3>Profissão: Politico</h3>
 
 <p>Sou um cara engraçado, comecei minha carreira fazendo stand up no programa do Tom cavalcante<br>
 logo depois virei politico pois nosso pais é uma piada<br>
 </p>
-<h2 style="text-align: center">HABILIDADES</h2>
+<div class="habilidades">
+<h2 style="text-align: center">HABILIDADES: </h2>
 <div class="conteudo">
 <ul>
     <li>Engraçado</li>
@@ -32,16 +37,21 @@ logo depois virei politico pois nosso pais é uma piada<br>
     <li><mark>Honesto</mark></li>
 </ul>
 </div>
+</div>
 
 <div id="redes sociais">
 <p style="text-align: center">
 <a target="_blank" href="https://pt.wikipedia.org/wiki/Tiririca" style="font-family: 'Times New Roman'">SOBRE MIM<br></a>
     <a href="mailto:wendel.nunes@ufn.edu.br">Contate ao seu empresario</a>
 </p>
+
 </div>
 
-<button class="botao"  onclick="window.open('https://www.camara.leg.br/deputados/160976', '_blank')">Portal da camara</button>
-<div class="tabela">
+<div class="portal">
+<button class="botao1"  onclick="window.open('https://www.camara.leg.br/deputados/160976', '_blank')">Portal da camara</button>
+</div>
+
+    <div class="tabela">
 <table>
     <tr>
         <th>Habilidades</th>
@@ -128,12 +138,23 @@ logo depois virei politico pois nosso pais é uma piada<br>
     </form>
 </div>
 
+<div class="volta">
+    <a href="#topo">
+        <img src="892561.png" alt="sobe">
+    </a>
+    <button class="tema" onclick="changeStyle('estilo.css')">
+        <img src="claro.png" alt="Claro">
+    </button>
 
-
-<a href="#topo">
-<button class="botao" >Voltar ao topo</button>
-</a>
-
+    <button class="tema" onclick="changeStyle('estilo-dark.css')">
+        <img src="cabuloso.png" alt="Escuro">
+    </button>
+    <script>
+        function changeStyle(sheet) {
+            document.getElementById('theme').href = sheet;
+        }
+    </script>
+</div>
 
 </body>
 </html>

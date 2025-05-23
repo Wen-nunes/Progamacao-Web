@@ -3,31 +3,34 @@ html{
 }
 
 body{
-    background-image: url("https://img.freepik.com/fotos-gratis/fundo-amarelo-textura-aquarela_1083-163.jpg");
+    background-image: url("sombra.jpg");
     background-repeat: repeat;
-    z-index: 1;
 }
 .cabeca{
     font-size: 30px;
-    background: #fcebb6;
+    background: #535353;
     margin-top: 0;
 }
 
 h1{
-    color: black;
+    color: red;
     font-family: "Times New Roman", serif;
 }
 
 h3{
+    color:red;
     font-size: 30px;
-    color:#5e412f;
-    background: #fcebb6;
+    background: #2a2a2a;
     text-align: center
 }
 
+h2{
+    color:red;
+}
+
 p{
-    background: aliceblue;
-    color: black;
+    background: #535353;
+    color: white;
     font-family: "Times New Roman", serif;
     padding: 30px;
     margin: 50px;
@@ -36,8 +39,8 @@ p{
 }
 
 .habilidades{
-    background: #fef0a5;
-    color: black;
+    background: #151515;
+    color: white;
     font-family: "Times New Roman", serif;
     padding: 3%;
     margin: 5% 20% 20%;
@@ -55,7 +58,7 @@ p{
     position: relative;
     font-family: "Times New Roman", serif;
     font-size: 20px;
-    background: #f8d28b;
+    background: #535353;
     border-style: solid;
     border-color: #74819d;
     border-radius: 40px;
@@ -69,8 +72,8 @@ p{
 }
 
 .Formulario{
-    background: aliceblue;
-    color: black;
+    background: #535353;
+    color: white;
     font-family: "Times New Roman", serif;
     padding: 3%;
     margin: 5% 20% 20%;
@@ -87,7 +90,7 @@ input[type=email]:focus,
 select:focus,
 textarea:focus {
     border: 2px solid #74819d;
-    background-color: #fef0a5;
+    background-color: #535353;
     outline: none;
 }
 
@@ -109,8 +112,8 @@ table {
 th, td {
     padding: 12px 18px;
     text-align: left;
-    border: 1px solid #ddd;
-    background: aliceblue;
+    border: 1px solid #535353;
+    background: #535353;
 }
 
 
@@ -120,15 +123,13 @@ th, td {
 }
 
 .volta{
+
     text-align: right;
     position: sticky;
     bottom: 0;
 
 }
 
-.volta img{
-    width: 8%;
-}
 .tema{
     display: flex;
     justify-content: right;
@@ -140,18 +141,23 @@ th, td {
 
 }
 
+.volta img{
+    width: 8%;
+}
+
 .botao1:hover{
-    background: #fef0a5;
+    background: red;
     transition: 0.3s;
 }
 
 .botao1{
     font-family: "Times New Roman", serif;
-    color: black;
+    color: white;
     font-size: 18px;
-    background: bisque;
+    background: #535353;
     border-radius: 15px;
     padding: 8px;
+    border-style: solid;
 }
 
 .fotos{
