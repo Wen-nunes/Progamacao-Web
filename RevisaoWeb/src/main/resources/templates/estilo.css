@@ -5,7 +5,7 @@ html{
 body{
     background-image: url("https://img.freepik.com/fotos-gratis/fundo-amarelo-textura-aquarela_1083-163.jpg");
     background-repeat: repeat;
-    z-index: 1;
+    margin: 0;
 }
 .cabeca{
     font-size: 30px;
@@ -120,6 +120,7 @@ th, td {
 }
 
 .volta{
+    border: none;
     text-align: right;
     position: sticky;
     bottom: 0;
@@ -127,7 +128,7 @@ th, td {
 }
 
 .volta img{
-    width: 8%;
+    width: 4%;
 }
 .tema{
     display: flex;
@@ -135,7 +136,6 @@ th, td {
     width: 100%;
     background: transparent;
     border: none;
-    margin: 2%;
     padding: 0;
 
 }

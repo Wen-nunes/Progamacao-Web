@@ -123,7 +123,6 @@ th, td {
 }
 
 .volta{
-
     text-align: right;
     position: sticky;
     bottom: 0;
@@ -142,7 +141,7 @@ th, td {
 }
 
 .volta img{
-    width: 8%;
+    width: 5%;
 }
 
 .botao1:hover{
