@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Controle de Porta Serial</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .container {
+            max-width: 800px;
+            margin-top: 50px;
+        }
+        .card {
+            border-radius: 15px;
+            box-shadow: 0 6px 10px rgba(0,0,0,0.08);
+        }
+        .btn-control {
+            font-size: 1.2rem;
+            padding: 15px 30px;
+            margin: 10px;
+            border-radius: 50px;
+            transition: all 0.3s;
+        }
+        .btn-on {
+            background-color: #28a745;
+            border-color: #28a745;
+        }
+        .btn-off {
+            background-color: #dc3545;
+            border-color: #dc3545;
+        }
+        .btn-on:hover {
+            background-color: #218838;
+            transform: scale(1.05);
+        }
+        .btn-off:hover {
+            background-color: #c82333;
+            transform: scale(1.05);
+        }
+        .status-indicator {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin: 20px auto;
+            transition: all 0.5s;
+        }
+        .status-on {
+            background-color: #28a745;
+            box-shadow: 0 0 20px #28a745;
+        }
+        .status-off {
+            background-color: #6c757d;
+        }
+        .history-item {
+            border-left: 4px solid;
+            margin-bottom: 10px;
+            padding: 10px;
+        }
+        .history-on {
+            border-left-color: #28a745;
+            background-color: rgba(40, 167, 69, 0.1);
+        }
+        .history-off {
+            border-left-color: #dc3545;
+            background-color: rgba(220, 53, 69, 0.1);
+        }
+        .last-updated {
+            font-size: 0.9rem;
+            color: #6c757d;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="card p-4">
+        <h2 class="text-center mb-4">Controle de Porta Serial</h2>
+
+        <div class="text-center mb-4">
+            <div id="statusIndicator" class="status-indicator status-off"></div>
+            <p id="statusText" class="h4">Status: Desligado</p>
+            <p id="lastUpdated" class="last-updated">Última atualização: --/--/---- --:--:--</p>
+        </div>
+
+        <div class="d-flex justify-content-center mb-5">
+            <a class="btn btn-control btn-on" href="http://localhost:8080/status/on">ligar</a>
+            <a class="btn btn-control btn-off" href="http://localhost:8080/status/off">desligar</a>
+            <a class="btn btn-control btn-off" href="http://localhost:8080/status/lista">Lista</a>
+        </div>
+
+        <div class="mb-4">
+            <h4 class="mb-3">Histórico de Estados</h4>
+            <div id="historyList" class="list-group">
+                <!-- Histórico será preenchido via JavaScript -->
+            </div>
+        </div>
+
+        <div class="alert alert-info">
+            <strong>Informação:</strong> Esta página controla a porta serial COM4.
+        </div>
+    </div>
+</div>
+</body>
+</html>
